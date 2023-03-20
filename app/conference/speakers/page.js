@@ -3,7 +3,7 @@ import styles from "../conference.module.css";
 
 async function fetchSpeakers(){
   const speakerJsonUrl = "https://raw.githubusercontent.com/adhithiravi/Consuming-GraphqL-Apollo/master/api/data/speakers.json";
-  const response = await fetch(speakerJsonUrl);
+  const response = await fetch(speakerJsonUrl, {next: {revalidate: 20} });
   const data = await response.json();
   return data;
 }
