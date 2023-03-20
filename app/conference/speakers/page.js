@@ -1,10 +1,13 @@
 import Link from "next/link";
 import styles from "../conference.module.css";
 
+export let speakerJson = {};
+
 async function fetchSpeakers(){
   const speakerJsonUrl = "https://raw.githubusercontent.com/adhithiravi/Consuming-GraphqL-Apollo/master/api/data/speakers.json";
   const response = await fetch(speakerJsonUrl, {next: {revalidate: 20} });
   const data = await response.json();
+  speakerJson = data;
   return data;
 }
 
@@ -21,7 +24,12 @@ export default async function Page() {
         {
           data.speakers.map(({id, name, bio}) =>
             <div key={id} className={styles.infoContainer}>
-              <h3 className={styles.titleText}>{name}</h3>
+              <Link 
+                className={styles.bgLinks}
+                href={`/conference/speakers/${name}`}
+                >
+                <h3 className={styles.titleText}>{name}</h3>
+              </Link>
               <h5 className={styles.descText}>{bio}</h5>
             </div>
           )
